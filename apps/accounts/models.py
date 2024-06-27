@@ -13,7 +13,7 @@ class User(AbstractBaseUser):
     phone = PhoneNumberField(region='RU', unique=True, max_length=13, verbose_name='Номер телефона')
     name = models.CharField(max_length=255, verbose_name='Имя')
     surname = models.CharField(max_length=255, verbose_name='Фамилия')
-    patronymic = models.CharField(max_length=255, verbose_name='Отчество')
+    patronymic = models.CharField(max_length=255, verbose_name='Отчество', blank=True, null=True)
     birthday = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -37,10 +37,15 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    def full_name(self):
+        if self.patronymic:
+            return f'{self.surname} {self.name} {self.patronymic}'
+        return f'{self.surname} {self.name}'
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         indexes = (
-            Index(fields=('email',),)
+            Index(fields=('email',)),
         )
 
