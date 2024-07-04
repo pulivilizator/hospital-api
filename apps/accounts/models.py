@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import Index
 from django.utils import timezone
 
-from phonenumber_field.modelfields import PhoneNumberField
+from phonenumber_field.modelfields import PhoneNumberField, PhoneNumber
 
 from .manager import UserManager
 
@@ -25,7 +25,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return self.full_name()
 
     def has_perm(self, perm, obj=None):
         return True
@@ -41,6 +41,11 @@ class User(AbstractBaseUser):
         if self.patronymic:
             return f'{self.surname} {self.name} {self.patronymic}'
         return f'{self.surname} {self.name}'
+
+    def save(self, *args, **kwargs):
+        if str(self.phone)[0] == '8':
+            self.phone = f'+7{self.phone[1:]}'
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Пользователь'

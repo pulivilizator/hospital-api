@@ -60,12 +60,12 @@ def get_config(path: str | None = None) -> Config:
         ),
 
         frontend=Frontend(
-            domain=env.url('FRONTEND_DOMAIN'),
+            domain=env('FRONTEND_DOMAIN'),
         ),
 
         s3=S3(
-            selectel_url=env.url('SELECTEL_CUSTOM_URL'),
-            endpoint_url=env.url('S3_ENDPOINT_URL'),
+            selectel_url=env('SELECTEL_CUSTOM_URL'),
+            endpoint_url=env('S3_ENDPOINT_URL'),
             access_key_id=env('S3_ACCESS_KEY_ID'),
             secret_access_key=env('S3_SECRET_ACCESS_KEY'),
             bucket_name=env('STORAGE_BUCKET_NAME'),

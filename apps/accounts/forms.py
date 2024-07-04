@@ -20,12 +20,6 @@ class UserCreationForm(forms.ModelForm):
 
         return password2
 
-    def clean_phone(self):
-        phone = self.cleaned_data.get('phone')
-        if phone[0] == '8':
-            return '+7' + phone[1:]
-        return phone
-
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])

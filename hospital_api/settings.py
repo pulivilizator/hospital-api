@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'corsheaders',
     'storages',
+    'django_filters',
 
     'apps.accounts.apps.AccountsConfig',
     'apps.doctors.apps.DoctorsConfig',
@@ -161,3 +162,4 @@ AWS_S3_SECRET_ACCESS_KEY = config.s3.secret_access_key
 AWS_STORAGE_BUCKET_NAME = config.s3.bucket_name
 AWS_S3_USE_SSL = True
 AWS_S3_VERIFY = False
+

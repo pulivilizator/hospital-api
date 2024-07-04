@@ -29,7 +29,7 @@ class UserAdmin(UserAdmin):
     add_fieldsets = [
         (None, {
             'fields': [
-                'email', 'phone', 'name', 'surname', 'patronymic', 'birthday'
+                'email', 'phone', 'name', 'surname', 'patronymic', 'birthday', 'password1', 'password2'
             ],
         }),
     ]

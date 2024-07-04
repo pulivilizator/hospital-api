@@ -34,8 +34,10 @@ class UserSerializer(serializers.ModelSerializer):
     manager = ManagerSerializer(required=False)
     patient = PatientSerializer(required=False)
 
-    email = serializers.EmailField(validators=[UniqueValidator(queryset=get_user_model().objects.all(), message='Email уже зарегистрирован')])
-    phone = PhoneNumberField(region='RU', validators=[UniqueValidator(queryset=get_user_model().objects.all(), message='Номер телефона уже зарегистрирован')])
+    email = serializers.EmailField(
+        validators=[UniqueValidator(queryset=get_user_model().objects.all(), message='Email уже зарегистрирован')])
+    phone = PhoneNumberField(region='RU', validators=[
+        UniqueValidator(queryset=get_user_model().objects.all(), message='Номер телефона уже зарегистрирован')])
     name = serializers.CharField(max_length=255)
     surname = serializers.CharField(max_length=255)
     patronymic = serializers.CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
@@ -51,9 +53,10 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_password(self, value):
         try:
             validate_password(value)
+            return value
         except DjangoValidationError as e:
-            raise serializers.ValidationError('Пароль должен состоять минимум из 8ми символов и содержать цифры, заглавные и строчные буквы')
-
+            raise serializers.ValidationError(
+                'Пароль должен состоять минимум из 8ми символов и содержать цифры, заглавные и строчные буквы')
 
     def validate(self, attrs):
         check_user_data(attrs)
